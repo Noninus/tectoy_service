@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:image/image.dart' as img;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
@@ -25,9 +25,25 @@ class MethodChannelTectoyService extends TectoyServicePlatform {
     return await methodChannel.invokeMethod("Printy", {"arguments": text});
   }
 
+  img.Image _b64ToImage(String b64) {
+    img.Image? image = img.decodeImage(base64.decode(b64));
+    if (image!.width > 385) {
+      return img.copyResize(image, width: 380);
+    } else {
+      return image;
+    }
+  }
+
+  String _imageToBase64(img.Image image) {
+    return base64Encode(img.encodeJpg(image));
+  }
+
   @override
   Future<int> sendPrinterImage(String base64img) async {
-    Uint8List decodedBytes = base64.decode(base64img);
+    img.Image imagemResized = _b64ToImage(base64img);
+    String imageBase64 = _imageToBase64(imagemResized);
+
+    Uint8List decodedBytes = base64.decode(imageBase64);
     Directory tempPath = await getTemporaryDirectory();
     File file = File('${tempPath.path}/img.jpg');
     await file.writeAsBytes(decodedBytes.buffer
