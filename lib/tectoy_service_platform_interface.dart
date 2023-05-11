@@ -38,4 +38,8 @@ abstract class TectoyServicePlatform extends PlatformInterface {
   Future<int> configurarTecToy(String tipoDispositivo) async {
     throw UnimplementedError('configurarTecToy() has not been implemented.');
   }
+
+  Future<int> cortarPapel() async {
+    throw UnimplementedError('cortarPapel() has not been implemented.');
+  }
 }

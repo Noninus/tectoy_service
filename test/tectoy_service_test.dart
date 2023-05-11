@@ -27,6 +27,12 @@ class MockTectoyServicePlatform
     // TODO: implement configurarTecToy
     throw UnimplementedError();
   }
+
+  @override
+  Future<int> cortarPapel() {
+    // TODO: implement cortarPapel
+    throw UnimplementedError();
+  }
 }
 
 void main() {

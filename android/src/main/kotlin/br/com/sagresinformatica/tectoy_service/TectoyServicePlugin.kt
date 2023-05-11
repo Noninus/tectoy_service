@@ -11,7 +11,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import android.util.Log
 
 /** TectoyServicePlugin */
 class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
@@ -33,19 +32,11 @@ class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     when (call.method) {
         "getPlatformVersion" -> {
-          Log.d("getPlatformVersion", "getPlatformVersion")
           result.success("Android ${android.os.Build.VERSION.RELEASE}")
         }
         "configurarTecToy" -> {
-          if(context==null){
-            Log.d("context==null", "context==null")
-          }else {
-            Log.d("context!=null", "context!=null")
-          }
-
           val argument = call.arguments as Map<String, String>
           val name = argument["arguments"]
-          Log.d("configurarTecToy", "configurarTecToy: " + name)
           if(name=="K2_MINI"){
             tecToy = TecToy(Dispositivo.K2_MINI, context)
           }else if(name=="K2"){
@@ -57,17 +48,19 @@ class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
           result.success(1)
         }
         "Printy" -> {
-          Log.d("Printy", "Printy")
           val argument = call.arguments as Map<String, String>
           val name = argument["arguments"]
           tecToy!!.imprimir(name.toString())
           result.success(1)
         }
         "printimage" -> {
-          Log.d("printimage", "printimage")
           val argument = call.arguments as Map<String, String>
           val name = argument["arguments"]
-          tecToy!!.imprimir(name.toString())
+          tecToy!!.imprimirImagem(name.toString())
+          result.success(1)
+        }
+        "cortarPapel" -> {
+          tecToy!!.acionarGuilhotina();
           result.success(1)
         }
         else -> {

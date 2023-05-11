@@ -51,7 +51,15 @@ class _MyAppState extends State<MyApp> {
 
   _printText() {
     try {
-      _tectoyServicePlugin.sendPrinterText("teste tectoy");
+      _tectoyServicePlugin.sendPrinterText("teste tectoy\n\n\n");
+    } on PlatformException {
+      // platformVersion = 'Failed to get platform version.';
+    }
+  }
+
+  _pularLinha() {
+    try {
+      _tectoyServicePlugin.sendPrinterText("\n");
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
     }
@@ -81,6 +89,14 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  _cortarPapel() {
+    try {
+      _tectoyServicePlugin.cortarPapel();
+    } on PlatformException {
+      // platformVersion = 'Failed to get platform version.';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -94,6 +110,9 @@ class _MyAppState extends State<MyApp> {
               child: Text('Running on: $_platformVersion\n'),
             ),
             ElevatedButton(
+                onPressed: () => _pularLinha(),
+                child: const Text("_pularLinha")),
+            ElevatedButton(
                 onPressed: () => _printText(), child: const Text("_printText")),
             ElevatedButton(
                 onPressed: () => _printImageString(),
@@ -101,6 +120,9 @@ class _MyAppState extends State<MyApp> {
             ElevatedButton(
                 onPressed: () => _printImageNota(),
                 child: const Text("_printImageNota")),
+            ElevatedButton(
+                onPressed: () => _cortarPapel(),
+                child: const Text("_cortarPapel")),
             ElevatedButton(
                 onPressed: () => _configurarTecToy("K2_MINI"),
                 child: const Text("_configurarTecToy"))

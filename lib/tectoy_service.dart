@@ -16,4 +16,8 @@ class TectoyService {
   Future<int> configurarTecToy(String tipoDispositivo) async {
     return TectoyServicePlatform.instance.configurarTecToy(tipoDispositivo);
   }
+
+  Future<int> cortarPapel() async {
+    return TectoyServicePlatform.instance.cortarPapel();
+  }
 }

@@ -42,4 +42,9 @@ class MethodChannelTectoyService extends TectoyServicePlatform {
     return await methodChannel
         .invokeMethod("configurarTecToy", {"arguments": tipoDispositivo});
   }
+
+  @override
+  Future<int> cortarPapel() async {
+    return await methodChannel.invokeMethod("cortarPapel");
+  }
 }
