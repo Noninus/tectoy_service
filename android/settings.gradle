@@ -1,0 +1,2 @@
+rootProject.name = 'tectoy_service'
+include ':it4r'
