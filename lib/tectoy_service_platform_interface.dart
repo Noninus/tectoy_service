@@ -31,7 +31,7 @@ abstract class TectoyServicePlatform extends PlatformInterface {
     throw UnimplementedError('sendPrinterText() has not been implemented.');
   }
 
-  Future<int> sendPrinterImage(String base64img) async {
+  Future<int> sendPrinterImage(String base64img, int imgSize) async {
     throw UnimplementedError('sendPrinterImage() has not been implemented.');
   }
 

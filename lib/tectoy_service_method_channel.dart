@@ -25,13 +25,9 @@ class MethodChannelTectoyService extends TectoyServicePlatform {
     return await methodChannel.invokeMethod("Printy", {"arguments": text});
   }
 
-  img.Image _b64ToImage(String b64) {
+  img.Image _b64ToImage(String b64, int imgSize) {
     img.Image? image = img.decodeImage(base64.decode(b64));
-    if (image!.width > 385) {
-      return img.copyResize(image, width: 380);
-    } else {
-      return image;
-    }
+    return img.copyResize(image, width: imgSize);
   }
 
   String _imageToBase64(img.Image image) {
@@ -39,8 +35,8 @@ class MethodChannelTectoyService extends TectoyServicePlatform {
   }
 
   @override
-  Future<int> sendPrinterImage(String base64img) async {
-    img.Image imagemResized = _b64ToImage(base64img);
+  Future<int> sendPrinterImage(String base64img, int imgSize) async {
+    img.Image imagemResized = _b64ToImage(base64img, imgSize);
     String imageBase64 = _imageToBase64(imagemResized);
 
     Uint8List decodedBytes = base64.decode(imageBase64);

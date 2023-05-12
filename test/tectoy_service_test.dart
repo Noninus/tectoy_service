@@ -11,7 +11,7 @@ class MockTectoyServicePlatform
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  Future<int> sendPrinterImage(String base64img) {
+  Future<int> sendPrinterImage(String base64img, int imgSize) {
     // TODO: implement sendPrinterImage
     throw UnimplementedError();
   }
