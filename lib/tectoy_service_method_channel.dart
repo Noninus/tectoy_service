@@ -26,9 +26,15 @@ class MethodChannelTectoyService extends TectoyServicePlatform {
     return await methodChannel.invokeMethod("Printy", {"arguments": text});
   }
 
+  @override
+  Future<int> sendKotlinPrinterText(String text) async {
+    return await methodChannel
+        .invokeMethod("PrintyTestJava", {"arguments": text});
+  }
+
   img.Image _b64ToImage(String b64, int imgSize) {
     img.Image? image = img.decodeImage(base64.decode(b64));
-    return img.copyResize(image, width: imgSize);
+    return img.copyResize(image!, width: imgSize);
   }
 
   String _imageToBase64(img.Image image) {

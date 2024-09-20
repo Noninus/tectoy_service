@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   path_provider: 2.0.4
-  image: ^2.1.4
+  image: ^4.1.7
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2

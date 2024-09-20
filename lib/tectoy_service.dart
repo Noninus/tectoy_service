@@ -9,6 +9,10 @@ class TectoyService {
     return TectoyServicePlatform.instance.sendPrinterText(text);
   }
 
+  Future<int> sendKotlinPrinterText(String text) async {
+    return TectoyServicePlatform.instance.sendKotlinPrinterText(text);
+  }
+
   Future<int> sendPrinterImage(String base64img, {int imgSize = 380}) async {
     return TectoyServicePlatform.instance.sendPrinterImage(base64img, imgSize);
   }
