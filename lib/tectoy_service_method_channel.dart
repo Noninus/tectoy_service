@@ -66,4 +66,9 @@ class MethodChannelTectoyService extends TectoyServicePlatform {
   Future<int> cortarPapel() async {
     return await methodChannel.invokeMethod("cortarPapel");
   }
+
+  @override
+  Future<int> paperStatus() async {
+    return await methodChannel.invokeMethod("statusImpressora");
+  }
 }

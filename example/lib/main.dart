@@ -58,6 +58,8 @@ class _MyAppState extends State<MyApp> {
   bool _extraToggle = false;
   bool _negritoToggle = false;
   bool _invertToggle = false;
+  final GlobalKey<ScaffoldMessengerState> messengerKey =
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
@@ -167,10 +169,36 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  var _status = 0;
+
+  _paperStatus(context) async {
+    try {
+      _status = await _tectoyServicePlugin.paperStatus();
+      messengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text('sts: $_status'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } on Exception catch (e) {
+      _status = 0;
+
+      messengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text('erro: $e'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      // platformVersion = 'Failed to get platform version.';
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        key: messengerKey,
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
@@ -178,6 +206,9 @@ class _MyAppState extends State<MyApp> {
           children: [
             Center(
               child: Text('Running on: $_platformVersion\n'),
+            ),
+            Center(
+              child: Text('stats on: $_status\n'),
             ),
             ElevatedButton(
                 onPressed: () => _pularLinha(),
@@ -271,6 +302,9 @@ class _MyAppState extends State<MyApp> {
             ElevatedButton(
                 onPressed: () => _cortarPapel(),
                 child: const Text("_cortarPapel")),
+            ElevatedButton(
+                onPressed: () => _paperStatus(context),
+                child: const Text("_paperStatus")),
             ElevatedButton(
                 onPressed: () => _printKotlin(),
                 child: const Text("_printKotlin")),

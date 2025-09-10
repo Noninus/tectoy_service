@@ -24,4 +24,13 @@ class TectoyService {
   Future<int> cortarPapel() async {
     return TectoyServicePlatform.instance.cortarPapel();
   }
+
+  Future<int> paperStatus() async {
+    int status = await TectoyServicePlatform.instance.paperStatus();
+    if (status == 0) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
 }

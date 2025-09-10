@@ -47,4 +47,8 @@ abstract class TectoyServicePlatform extends PlatformInterface {
   Future<int> cortarPapel() async {
     throw UnimplementedError('cortarPapel() has not been implemented.');
   }
+
+  Future<int> paperStatus() async {
+    throw UnimplementedError('paperStatus() has not been implemented.');
+  }
 }

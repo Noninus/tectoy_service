@@ -92,6 +92,9 @@ class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
           tecToy!!.acionarGuilhotina();
           result.success(1)
         }
+        "statusImpressora" -> {
+          result.success(tecToy!!.statusImpressora().obtemStatus())
+        }
         else -> {
           result.notImplemented()
         }
