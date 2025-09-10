@@ -26,11 +26,6 @@ class TectoyService {
   }
 
   Future<int> paperStatus() async {
-    int status = await TectoyServicePlatform.instance.paperStatus();
-    if (status == 0) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return await TectoyServicePlatform.instance.paperStatus();
   }
 }
