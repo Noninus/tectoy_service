@@ -161,6 +161,142 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  Future<void> _imprimirSenhaInvertida() async {
+    try {
+      var senhaText = 'SENHA 123';
+      int quantidadeEmBranco = 24 - senhaText.length;
+      var quantidadeFinal = (quantidadeEmBranco % 2 == 0
+          ? quantidadeEmBranco
+          : quantidadeEmBranco - 1);
+      String branco = "".padLeft(quantidadeFinal + senhaText.length, " ");
+      String brancoMeio = "".padLeft((quantidadeFinal / 2).floor(), " ");
+
+      // Senha em destaque com inversão
+      String senhaInvertida =
+          "$invetImp$negrito$extra$branco\n$brancoMeio$senhaText$brancoMeio\n$branco$desligInvert$deslNegrito$deslExtra\n\n\n";
+
+      await _tectoyServicePlugin.sendPrinterText(senhaInvertida);
+      await Future.delayed(const Duration(milliseconds: 25));
+
+      // Cortar papel
+      await _tectoyServicePlugin.cortarPapel();
+      await Future.delayed(const Duration(milliseconds: 150));
+
+      messengerKey.currentState?.showSnackBar(
+        const SnackBar(
+          content: Text('Senha impressa com sucesso!'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      messengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text('Erro ao imprimir senha: $e'),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  Future<void> _imprimirRecibo() async {
+    try {
+      var senhaText = 'SENHA 1842';
+      int quantidadeEmBranco = 48 - senhaText.length;
+      var quantidadeFinal = (quantidadeEmBranco % 2 == 0
+          ? quantidadeEmBranco
+          : quantidadeEmBranco - 1);
+      String branco = "".padLeft(quantidadeFinal + senhaText.length, " ");
+      String brancoMeio = "".padLeft((quantidadeFinal / 2).floor(), " ");
+
+      await Future.delayed(const Duration(milliseconds: 25));
+
+      // Senha em destaque com inversão
+      String senhaInvertida =
+          "$invetImp$negrito$extra$branco\n$brancoMeio$senhaText$brancoMeio\n$branco$desligInvert$deslNegrito$deslExtra\n\n";
+
+      await _tectoyServicePlugin.sendPrinterText(senhaInvertida);
+      await Future.delayed(const Duration(milliseconds: 25));
+
+      // Nome da empresa centralizado
+      String empresaNome = "${centro}EMPRESA TESTE$deslCentro\n\n";
+      await _tectoyServicePlugin.sendPrinterText(empresaNome);
+      await Future.delayed(const Duration(milliseconds: 25));
+
+      // Linha com identificação e terminal
+      String identificacao = "Identificacao: #123";
+      String terminal = "TERMINAL: 001";
+      int espacos = 42 - identificacao.length - terminal.length;
+      String linha1 = "$identificacao${"".padLeft(espacos, " ")}$terminal\n";
+      await _tectoyServicePlugin.sendPrinterText(linha1);
+      await Future.delayed(const Duration(milliseconds: 25));
+
+      await _tectoyServicePlugin.sendPrinterText("\n");
+
+      // Informações do recibo
+      String semValor = "SEM VALOR FISCAL";
+      String data1 = "19/08/1998";
+      espacos = 42 - semValor.length - data1.length;
+      String linha2 = "$semValor${"".padLeft(espacos, " ")}$data1\n";
+      await _tectoyServicePlugin.sendPrinterText(linha2);
+
+      String naoPagamento = "NAO COMPROVA PAGAMENTO";
+      String data2 = "19/08/1998";
+      espacos = 42 - naoPagamento.length - data2.length;
+      String linha3 = "$naoPagamento${"".padLeft(espacos, " ")}$data2\n";
+      await _tectoyServicePlugin.sendPrinterText(linha3);
+
+      // Seção de produtos
+      await _tectoyServicePlugin.sendPrinterText("\n");
+      String cabecalhoProdutos = "Qtd  Produtos${"".padLeft(24, " ")}Total\n";
+      await _tectoyServicePlugin.sendPrinterText(cabecalhoProdutos);
+
+      String divisor = "-----------------------------------------\n";
+      await _tectoyServicePlugin.sendPrinterText(divisor);
+
+      // Produtos exemplo
+      String produto1 = "2    Hamburguer${"".padLeft(20, " ")}24,00\n";
+      await _tectoyServicePlugin.sendPrinterText(produto1);
+
+      String produto2 = "1    Refrigerante${"".padLeft(17, " ")}8,32\n";
+      await _tectoyServicePlugin.sendPrinterText(produto2);
+
+      await _tectoyServicePlugin.sendPrinterText(divisor);
+
+      // Total
+      String totalLinha = "${direita}Valor total: R\$ 32,32$deslDireita\n\n";
+      await _tectoyServicePlugin.sendPrinterText(totalLinha);
+
+      // Rodapé
+      String rodape =
+          "${centro}Prato Digital v123\n(43) 3338-8099$deslCentro\n\n\n";
+      await _tectoyServicePlugin.sendPrinterText(rodape);
+
+      // Cortar papel
+      await _tectoyServicePlugin.cortarPapel();
+      await Future.delayed(const Duration(milliseconds: 150));
+
+      print("Sucesso! Recibo impresso.");
+      messengerKey.currentState?.showSnackBar(
+        const SnackBar(
+          content: Text('Recibo impresso com sucesso!'),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      print("Erro ao imprimir: $e");
+      messengerKey.currentState?.showSnackBar(
+        SnackBar(
+          content: Text('Erro ao imprimir: $e'),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
   _cortarPapel() {
     try {
       _tectoyServicePlugin.cortarPapel();
@@ -177,7 +313,7 @@ class _MyAppState extends State<MyApp> {
       messengerKey.currentState?.showSnackBar(
         SnackBar(
           content: Text('sts: $_status'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     } on Exception catch (e) {
@@ -186,7 +322,7 @@ class _MyAppState extends State<MyApp> {
       messengerKey.currentState?.showSnackBar(
         SnackBar(
           content: Text('erro: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       // platformVersion = 'Failed to get platform version.';
@@ -215,14 +351,14 @@ class _MyAppState extends State<MyApp> {
                 child: const Text("_pularLinha")),
             Text(
               imprimir,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   children: [
-                    Text("direita"),
+                    const Text("direita"),
                     Checkbox(
                       value: _direitaToggle,
                       onChanged: (v) {
@@ -235,7 +371,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Column(
                   children: [
-                    Text("centro"),
+                    const Text("centro"),
                     Checkbox(
                       value: _centroToggle,
                       onChanged: (v) {
@@ -248,7 +384,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Column(
                   children: [
-                    Text("extra"),
+                    const Text("extra"),
                     Checkbox(
                       value: _extraToggle,
                       onChanged: (v) {
@@ -261,7 +397,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Column(
                   children: [
-                    Text("negrito"),
+                    const Text("negrito"),
                     Checkbox(
                       value: _negritoToggle,
                       onChanged: (v) {
@@ -274,7 +410,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 Column(
                   children: [
-                    Text("invert"),
+                    const Text("invert"),
                     Checkbox(
                       value: _invertToggle,
                       onChanged: (v) {
@@ -310,7 +446,19 @@ class _MyAppState extends State<MyApp> {
                 child: const Text("_printKotlin")),
             ElevatedButton(
                 onPressed: () => _configurarTecToy("K2_MINI"),
-                child: const Text("_configurarTecToy"))
+                child: const Text("_configurarTecToy")),
+            ElevatedButton(
+                onPressed: () => _imprimirRecibo(),
+                child: const Text("Imprimir Recibo Teste",
+                    style: TextStyle(fontWeight: FontWeight.bold))),
+            ElevatedButton(
+                onPressed: () => _imprimirSenhaInvertida(),
+                child: const Text("Imprimir Senha Invertida",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                ))
           ],
         ),
       ),
