@@ -21,7 +21,8 @@ class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
   private lateinit var channel : MethodChannel
   private lateinit var context: Context
 
-  val centro = "" + 0x1B.toChar() + 0x61.toChar() + 0x31.toChar()
+  // ESC a n - Alinhamento: n=0(esquerda), n=1(centro), n=2(direita)
+  val centro = "" + 0x1B.toChar() + 0x61.toChar() + 0x01.toChar()
   val deslCentro = "" + 0x1B.toChar() + 0x61.toChar() + 0x30.toChar()
   val direita = "" + 0x1B.toChar() + 0x61.toChar() + 0x32.toChar()
   val deslDireita = "" + 0x1B.toChar() + 0x61.toChar() + 0x30.toChar()
@@ -62,8 +63,8 @@ class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
         }
         "Printy" -> {
           val argument = call.arguments as Map<String, String>
-          val name = argument["arguments"]
-          tecToy!!.imprimir(name.toString())
+          val text = argument["arguments"] ?: ""
+          tecToy!!.imprimir(text)
           result.success(1)
         }
         "PrintyTestJava" -> {
