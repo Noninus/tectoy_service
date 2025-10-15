@@ -63,8 +63,8 @@ class TectoyServicePlugin: FlutterPlugin, MethodCallHandler {
         }
         "Printy" -> {
           val argument = call.arguments as Map<String, String>
-          val text = argument["arguments"] ?: ""
-          tecToy!!.imprimir(text)
+          val name = argument["arguments"]
+          tecToy!!.imprimir(name.toString())
           result.success(1)
         }
         "PrintyTestJava" -> {
